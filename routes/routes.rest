@@ -6,5 +6,5 @@ POST http://localhost:3000/people/
 Content-Type: application/json
 
 {
-  "name": "Logan", "age": "2X", "occupation": "GPT"
+  "name": "", "age": "2X", "occupation": "Test Subject"
 }
