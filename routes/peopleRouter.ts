@@ -1,0 +1,108 @@
+import { Request, Response, Router } from 'express';
+const peopleRouter: Router = Router();
+import { Person } from '../models/person.js';
+import mongoose from 'mongoose';
+//document is the name of the individual instance of a mongoose schema object (?)
+
+//GET (ALL)
+
+
+peopleRouter.get('/', async (req: Request, res: Response) => {
+    console.log("BODY", req.body);
+    try {
+        const people: mongoose.Document[] = await Person.find();
+        res.json(people);
+
+        //what type should error be here?
+    } catch (err: any) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
+
+// GET (ID)
+peopleRouter.get('/:id', async (req: Request, res: Response) => {
+    const person = await Person.findById(req.params.id)
+    res.json(person);
+});
+
+
+// CREATE
+peopleRouter.post('/', async (req: Request, res: Response) => {
+
+    //Instantiating a new person object to send to the database
+    const person: mongoose.Document = new Person({
+        name: req.body.name,
+        age: req.body.age,
+        occupation: req.body.occupation
+    })
+
+    try {
+        const newPerson: mongoose.Document = await person.save()
+        res.status(201).json(newPerson)
+    } catch (err: any) {
+        res.status(400).json({ message: err.message })
+    }
+})
+
+
+// UPDATE
+
+//NOTE: "can't set headers after response is sent to the client" error usually indicates you have competing responses
+peopleRouter.patch('/:id', async (req: Request, res: Response) => {
+    try {
+        const person = await Person.findById(req.params.id);
+        if (person) {
+            if (req.body.name != null) {
+                person.name = req.body.name;
+            }
+            if (req.body.age != null) {
+                person.age = req.body.age
+            }
+            if (req.body.occupation != null) {
+                person.occupation = req.body.occupation
+            }
+            const patchedPerson = await person.save();
+            res.json(patchedPerson);
+        }
+    } catch (err: any) {
+        res.status(400).json({ message: err.message })
+    }
+
+})
+
+// DELETE
+peopleRouter.delete('/:id', async (req:Request, res:Response)=>{
+    await Person.findByIdAndDelete(req.params.id);
+    res.json({ message: "Deletion successful" });
+})
+
+export default peopleRouter;
+
+
+
+
+
+
+
+
+
+
+
+// //Loads the instance of a person searched by ID from DB into the req for passing through middleware, NOTE all req types must be loadedReq after this.
+// export const getPerson: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+//     let person;
+//     try {
+//         person = await Person.findById(req.params.id)
+//         if (person == null) {
+//             res.status(404).json({ message: 'Cannot find person with id ' + req.params.id });
+//             return;
+//         }
+//     } catch (err: any) {
+//         res.status(500).json({ message: err.message });
+//         return;
+//     }
+
+//     (req as loadedReq).payload = person;
+//     next()
+// }
