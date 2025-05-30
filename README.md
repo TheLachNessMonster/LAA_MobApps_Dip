@@ -11,3 +11,10 @@ using JSON serialisation.
 - Express: web framework
 - Mongoose: MongoDB client
 - dotenv: loads environment variables from local .env config file
+
+### Ref
+https://blog.logrocket.com/express-typescript-node/
+https://www.youtube.com/watch?v=fgTGADljAeg
+https://github.com/WebDevSimplified/Your-First-Node-REST-API/blob/master/routes/subscribers.js
+https://expressjs.com/en/guide/using-middleware.html
+https://medium.com/@felixpratama242/crud-using-express-js-typescript-and-mongodb-0504b2617bf1

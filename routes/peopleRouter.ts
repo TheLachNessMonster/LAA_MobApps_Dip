@@ -6,24 +6,24 @@ import mongoose from 'mongoose';
 
 //GET (ALL)
 
-
 peopleRouter.get('/', async (req: Request, res: Response) => {
-    console.log("BODY", req.body);
     try {
         const people: mongoose.Document[] = await Person.find();
         res.json(people);
-
-        //what type should error be here?
     } catch (err: any) {
-        res.status(500).json({ message: err.message })
+        res.json({ message: err.message })
     }
 })
 
 
 // GET (ID)
 peopleRouter.get('/:id', async (req: Request, res: Response) => {
-    const person = await Person.findById(req.params.id)
-    res.json(person);
+    try {
+        const person = await Person.findById(req.params.id)
+        res.json(person);
+    } catch (err: any) {
+        res.json({ message: err.message })
+    }
 });
 
 
@@ -39,9 +39,9 @@ peopleRouter.post('/', async (req: Request, res: Response) => {
 
     try {
         const newPerson: mongoose.Document = await person.save()
-        res.status(201).json(newPerson)
+        res.json(newPerson)
     } catch (err: any) {
-        res.status(400).json({ message: err.message })
+        res.json({ message: err.message })
     }
 })
 
@@ -66,43 +66,21 @@ peopleRouter.patch('/:id', async (req: Request, res: Response) => {
             res.json(patchedPerson);
         }
     } catch (err: any) {
-        res.status(400).json({ message: err.message })
+        res.json({ message: err.message })
     }
 
 })
 
 // DELETE
-peopleRouter.delete('/:id', async (req:Request, res:Response)=>{
-    await Person.findByIdAndDelete(req.params.id);
-    res.json({ message: "Deletion successful" });
+peopleRouter.delete('/:id', async (req: Request, res: Response) => {
+    try {
+        await Person.findByIdAndDelete(req.params.id);
+        res.json({ message: "Deletion successful" });
+    } catch (err: any) {
+        res.json({ message: err.message })
+    }
+
+
 })
 
 export default peopleRouter;
-
-
-
-
-
-
-
-
-
-
-
-// //Loads the instance of a person searched by ID from DB into the req for passing through middleware, NOTE all req types must be loadedReq after this.
-// export const getPerson: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-//     let person;
-//     try {
-//         person = await Person.findById(req.params.id)
-//         if (person == null) {
-//             res.status(404).json({ message: 'Cannot find person with id ' + req.params.id });
-//             return;
-//         }
-//     } catch (err: any) {
-//         res.status(500).json({ message: err.message });
-//         return;
-//     }
-
-//     (req as loadedReq).payload = person;
-//     next()
-// }
