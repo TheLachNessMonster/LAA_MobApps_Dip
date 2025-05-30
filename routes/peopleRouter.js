@@ -46,14 +46,8 @@ peopleRouter.patch('/:id', async (req, res) => {
     try {
         const person = await person_js_1.Person.findById(req.params.id);
         if (person) {
-            let workingCopy = person?.toObject();
-            //let searchKeys[] :string[] = Object.keys(p)
-            console.log("person instantiated");
-            // for(let p in person){
-            //     console.log(p)
-            // }
+            let workingCopy = person.toObject();
             for (let key of Object.keys(workingCopy)) {
-                console.log(key);
                 if (req.body[key] != null) {
                     person[key] = req.body[key];
                 }
