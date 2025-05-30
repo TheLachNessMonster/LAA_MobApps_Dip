@@ -2,7 +2,7 @@ import {Schema, model} from "mongoose";
 
 
 //TS interface
-interface IPerson{
+export interface IPerson{
     name: string,
     age: string,
     occupation: string

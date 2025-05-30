@@ -18,7 +18,7 @@ PATCH  http://localhost:3000/people/682e9dbb065d7d041e5b7b7a/
 Content-Type: application/json
 
 {
-  "age": "00", "occupation": "Quilter"
+  "age": "22", "occupation": "Quilter"
 }
 
 ###

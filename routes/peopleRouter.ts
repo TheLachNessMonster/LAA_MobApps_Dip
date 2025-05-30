@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 const peopleRouter: Router = Router();
-import { Person } from '../models/person.js';
+import { IPerson, Person } from '../models/person.js';
 import mongoose from 'mongoose';
 //document is the name of the individual instance of a mongoose schema object (?)
 
@@ -53,15 +53,22 @@ peopleRouter.patch('/:id', async (req: Request, res: Response) => {
     try {
         const person = await Person.findById(req.params.id);
         if (person) {
-            if (req.body.name != null) {
-                person.name = req.body.name;
+            let workingCopy = person?.toObject();
+            console.log("person instantiated")
+            for (let key of Object.keys(workingCopy) as (keyof IPerson)[]) {
+                if(req.body[key]!= null){
+                    person[key] = req.body[key];
+                }
             }
-            if (req.body.age != null) {
-                person.age = req.body.age
-            }
-            if (req.body.occupation != null) {
-                person.occupation = req.body.occupation
-            }
+            // if (req.body.name != null) {
+            //     person.name = req.body.name;
+            // }
+            // if (req.body.age != null) {
+            //     person.age = req.body.age
+            // }
+            // if (req.body.occupation != null) {
+            //     person.occupation = req.body.occupation
+            // }
             const patchedPerson = await person.save();
             res.json(patchedPerson);
         }
