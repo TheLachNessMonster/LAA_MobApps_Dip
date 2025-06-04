@@ -16,7 +16,15 @@ db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to DB'));
 //express server init
 const peopleRouter_1 = __importDefault(require("./routes/peopleRouter"));
+const workplaceRouter_1 = __importDefault(require("./routes/workplaceRouter"));
+const userRouter_1 = __importDefault(require("./routes/userRouter"));
+const incidentRouter_1 = __importDefault(require("./routes/incidentRouter"));
 app.use(express_1.default.json());
+///
 app.use('/people', peopleRouter_1.default);
+///
+app.use('/workplaces', workplaceRouter_1.default);
+app.use('/users', userRouter_1.default);
+app.use('/incidents', incidentRouter_1.default);
 //Sample URL: localhost3000/people
 app.listen(3000, () => console.log("Server running"));

@@ -1,4 +1,15 @@
-GET http://localhost:3000/people/
+GET http://localhost:3000/workplaces/
+
+###
+GET http://localhost:3000/users/
+
+###
+POST http://localhost:3000/users/
+Content-Type: application/json
+
+{
+  "name": "", "email": "@email.com", "role":"", "workplaceId":"n/a"
+}
 
 ###
 
@@ -6,6 +17,13 @@ GET http://localhost:3000/people/6828231e58ad90e3fc2ebdd7/
 
 ###
 
+POST http://localhost:3000/workplaces/
+Content-Type: application/json
+
+{
+  "name": "CompTech", "location": "Petersham"
+}
+###
 POST http://localhost:3000/people/
 Content-Type: application/json
 

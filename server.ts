@@ -23,10 +23,24 @@ db.once('open', () => console.log('Connected to DB'));
 
 //express server init
 
-import peopleRouter from './routes/peopleRouter';
+//import peopleRouter from './routes/peopleRouter';
+import workplaceRouter from './routes/workplaceRouter';
+import userRouter from './routes/userRouter';
+import incidentRouter from './routes/incidentRouter';
+
 
 app.use(express.json())
-app.use('/people', peopleRouter)
+
+///
+//app.use('/people', peopleRouter)
+///
+
+app.use('/workplaces', workplaceRouter)
+app.use('/users', userRouter)
+app.use('/incidents', incidentRouter)
+
+
+
 //Sample URL: localhost3000/people
 
 app.listen(3000, ()=>console.log("Server running"));
