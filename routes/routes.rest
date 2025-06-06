@@ -1,5 +1,17 @@
 GET http://localhost:3000/workplaces/
+###
+GET http://localhost:3000/incidents/
 
+
+###
+DELETE  http://localhost:3000/incidents/68428d364125f9ef2368a042/
+###
+POST http://localhost:3000/incidents/
+Content-Type: application/json
+
+{
+  "title": "Fall", "description": "slip and trip", "photoPath":"404", "reportedBy":"683ff2699ee81d014e06f116", "workplaceId":"683ff1da9ee81d014e06f10d", "status":"", "createdAt":"xdgsd", "riskLevel":"Medium"
+}
 ###
 GET http://localhost:3000/users/
 
@@ -8,7 +20,7 @@ POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
-  "name": "", "email": "@email.com", "role":"", "workplaceId":"n/a"
+  "name": "Ashley", "email": "ash@email.com", "role":"Frontend", "workplaceId":"683ff1da9ee81d014e06f10d"
 }
 
 ###

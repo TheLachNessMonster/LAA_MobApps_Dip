@@ -6,7 +6,7 @@ const incident_js_1 = require("../models/incident.js");
 //GET (ALL)
 incidentRouter.get('/', async (req, res) => {
     try {
-        const incidents = await incident_js_1.Incident.find();
+        const incidents = await incident_js_1.Incident.find().populate(["reportedBy", "workplaceId"]);
         res.json(incidents);
     }
     catch (err) {

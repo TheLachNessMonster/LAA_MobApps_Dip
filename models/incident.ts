@@ -34,15 +34,18 @@ const IncedentSchema = new Schema<IIncedent>({
         ref: 'Workplace',
         required: true
     },
-
+    
+    //make strict required (?)
     status: {
         type: String,
-        default: 'Open'
+        set: statusDefault,
     },
 
+    //make strict required (?) 
     createdAt: {
         type: Date,
-        default: Date.now
+        set: createdAtDefault
+        //set: createdAtDefault
     },
 
     riskLevel: {
@@ -52,6 +55,27 @@ const IncedentSchema = new Schema<IIncedent>({
     }
 
 })
+
+
+
+function createdAtDefault(input:string){
+    if(input === ""){
+        return new Date()
+    }else{
+        //Add date validation here
+        return Date.parse(input)
+    }
+}
+
+
+function statusDefault(input:string){
+    if(input === ""){
+        return "Open"
+    }else{
+        return input
+    }
+}
+
 
 //ES TS export default
 export const Incident = model<IIncedent>('Incident', IncedentSchema)

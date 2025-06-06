@@ -6,7 +6,7 @@ const user_js_1 = require("../models/user.js");
 //GET (ALL)
 userRouter.get('/', async (req, res) => {
     try {
-        const users = await user_js_1.User.find();
+        const users = await user_js_1.User.find().populate('workplaceId');
         res.json(users);
     }
     catch (err) {
@@ -16,7 +16,7 @@ userRouter.get('/', async (req, res) => {
 // GET (ID)
 userRouter.get('/:id', async (req, res) => {
     try {
-        const user = await user_js_1.User.findById(req.params.id);
+        const user = await user_js_1.User.findById(req.params.id).populate('workplaceId');
         res.json(user);
     }
     catch (err) {
@@ -52,7 +52,9 @@ userRouter.patch('/:id', async (req, res) => {
                     user[key] = req.body[key];
                 }
             }
-            const patchedUser = await user.save();
+            //const patchedUser = await user.save();
+            await user.save();
+            const patchedUser = await user_js_1.User.findById(req.params.id).populate('workplaceId');
             res.json(patchedUser);
         }
     }

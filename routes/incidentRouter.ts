@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 
 incidentRouter.get('/', async (req: Request, res: Response) => {
     try {
-        const incidents: mongoose.Document[] = await Incident.find();
+        const incidents: mongoose.Document[] = await Incident.find().populate(["reportedBy", "workplaceId"]);
         res.json(incidents);
     } catch (err: any) {
         res.json({ message: err.message })

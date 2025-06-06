@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 
 userRouter.get('/', async (req: Request, res: Response) => {
     try {
-        const users: mongoose.Document[] = await User.find();
+        const users: mongoose.Document[] = await User.find().populate('workplaceId');
         res.json(users);
     } catch (err: any) {
         res.json({ message: err.message })
@@ -18,7 +18,7 @@ userRouter.get('/', async (req: Request, res: Response) => {
 // GET (ID)
 userRouter.get('/:id', async (req: Request, res: Response) => {
     try {
-        const user = await User.findById(req.params.id)
+        const user = await User.findById(req.params.id).populate('workplaceId');
         res.json(user);
     } catch (err: any) {
         res.json({ message: err.message })
@@ -60,7 +60,9 @@ userRouter.patch('/:id', async (req: Request, res: Response) => {
                 }
             }
 
-            const patchedUser = await user.save();
+            //const patchedUser = await user.save();
+            await user.save();
+            const patchedUser = await User.findById(req.params.id).populate('workplaceId');
             res.json(patchedUser);
         }
     } catch (err: any) {
