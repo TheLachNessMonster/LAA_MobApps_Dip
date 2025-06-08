@@ -18,7 +18,7 @@ incidentRouter.get('/', async (req: Request, res: Response) => {
 // GET (ID)
 incidentRouter.get('/:id', async (req: Request, res: Response) => {
     try {
-        const incident = await Incident.findById(req.params.id)
+        const incident = await Incident.findById(req.params.id).populate(["reportedBy", "workplaceId"]);
         res.json(incident);
     } catch (err: any) {
         res.json({ message: err.message })
