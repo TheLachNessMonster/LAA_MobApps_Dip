@@ -1,6 +1,7 @@
 //import { ApiClient } from "./api";
+import { IWorkplace } from "../models/workplace";
 import { NewApiClient } from "./newapi";
-import {ApiService, WorkplaceService} from "./service";
+import {GenericService} from "./service";
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -9,10 +10,11 @@ const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3000';
 
 const apiClient = new NewApiClient(API_BASE_URL)
 
-const ws = new WorkplaceService(apiClient, '/workplaces')
+const newWS = new GenericService<IWorkplace>(apiClient, '/workplaces')
 
 async function testfunc() {
-    let readout = await ws.getById("683ff1da9ee81d014e06f10d");
+    //let readout = await ws.getById("683ff1da9ee81d014e06f10d");
+    let readout = await newWS.getAll();
     console.log(readout)
 
     // let readout2 = await us.getAllUsers();
