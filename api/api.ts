@@ -42,6 +42,7 @@ class ApiClient {
             if (!response.ok) {
                 throw new Error(`API Error: ${response.status} ${response.statusText}`);
             }
+            if (response.status === 204) return null as T;
 
             return await response.json();
         } catch (error) {
